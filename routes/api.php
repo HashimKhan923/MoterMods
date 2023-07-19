@@ -107,6 +107,39 @@ Route::group(['middleware' => ['auth:api']], function(){
         });
     });
 
+                                                /// OneBanner \\\
+
+    Route::group(['prefix' => '/admin/onebanner/'], function() {
+        Route::controller(App\Http\Controllers\Admin\OneBannerController::class)->group(function () {
+            Route::get('show','index');
+            Route::post('createOrUpdate','createOrUpdate');
+            Route::get('delete/{id}','delete');
+        });
+    });
+
+                                                    /// TwoBanner \\\
+
+    Route::group(['prefix' => '/admin/twobanner/'], function() {
+        Route::controller(App\Http\Controllers\Admin\TwoBannerController::class)->group(function () {
+            Route::get('show','index');
+            Route::post('create','create');
+            Route::post('update','update');
+            Route::get('delete/{id}','delete');
+        });
+    });
+
+
+                                                    /// ThreeBanner \\\
+
+    Route::group(['prefix' => '/admin/threebanner/'], function() {
+        Route::controller(App\Http\Controllers\Admin\ThreeBannerController::class)->group(function () {
+            Route::get('show','index');
+            Route::post('create','create');
+            Route::post('update','update');
+            Route::get('delete/{id}','delete');
+        });
+    });    
+
 
                                                 /// Bolg Category \\\
 
