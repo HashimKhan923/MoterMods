@@ -14,14 +14,14 @@ class Product extends Model
         'tags' => 'array',
     ];
 
-    public function ratings()
+    public function review()
     {
-        return $this->hasMany(ProductRating::class);
+        return $this->hasMany(ProductReview::class);
     }
 
     public function getRatingAttribute()
     {
-        return $this->ratings()->avg('rating');
+        return $this->review()->avg('rating');
     }
 
     

@@ -401,8 +401,6 @@ Route::middleware(['seller'])->group(function () {
       Route::group(['prefix' => 'product/'], function() {
         Route::controller(App\Http\Controllers\Customer\ProductController::class)->group(function () {
             Route::get('show','index');
-            Route::post('comment','comment');
-            Route::post('rating','rating');
             Route::get('detail/{id}','detail');
         });
     });
@@ -415,6 +413,14 @@ Route::middleware(['seller'])->group(function () {
             Route::get('show/{id}','index');
             Route::post('create','create');
             Route::get('delete/{id}','delete');
+        });
+    });
+
+                                              /// Review \\\
+
+        Route::group(['prefix' => 'review/'], function() {
+        Route::controller(App\Http\Controllers\Customer\ProductReviewController::class)->group(function () {
+            Route::post('create','create');
         });
     });
 
