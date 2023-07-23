@@ -26,6 +26,8 @@ return new class extends Migration
             $table->decimal('unit')->nullable();
             $table->string('sku')->nullable();
             $table->string('model')->nullable();
+            $table->string('engine_type')->nullable();
+            $table->string('condition')->nullable();
             $table->bigInteger('brand_id')->unsigned()->nullable();
             $table->foreign('brand_id')->references('id')->on('brands')->onDelete('cascade')->onUpdate('cascade');
             $table->text('photos')->nullable();

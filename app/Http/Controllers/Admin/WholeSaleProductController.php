@@ -64,6 +64,8 @@ class WholeSaleProductController extends Controller
         $new->sku = $request->sku;
         $new->brand_id = $request->brand_id;
         $new->model = $request->model;
+        $new->engine_type = $request->engine_type;
+        $new->condition = $request->condition;
 
         if ($request->photos) {
             // return $request->photos;
@@ -189,6 +191,8 @@ class WholeSaleProductController extends Controller
         $update->sku = $request->sku;
         $update->brand_id = $request->brand_id;
         $update->model = $request->model;
+        $update->engine_type = $request->engine_type;
+        $update->condition = $request->condition;
 
         if ($request->file('photos')) {
             $ProductGallery = array(); // Initialize the array
