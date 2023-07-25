@@ -389,7 +389,7 @@ Route::middleware(['seller'])->group(function () {
 
                                     /// Home \\\
 
-        Route::group(['prefix' => '/'], function() {
+        Route::group(['prefix' => '/home'], function() {
             Route::controller(App\Http\Controllers\Customer\HomeController::class)->group(function () {
                 Route::get('','index');
             });
