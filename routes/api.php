@@ -39,6 +39,10 @@ Route::post('/admin/register', 'App\Http\Controllers\Admin\AuthController@regist
 Route::post('/seller/login', '\App\Http\Controllers\Seller\AuthController@login');
 Route::post('/seller/register', 'App\Http\Controllers\Seller\AuthController@register');
 
+/// marketing Register
+Route::post('/marketing/login', '\App\Http\Controllers\Marketing\AuthController@login');
+Route::post('/marketing/register', 'App\Http\Controllers\Marketing\AuthController@register');
+
 /// customer Register
 Route::post('/login', '\App\Http\Controllers\Customer\AuthController@login');
 Route::post('/customer/register', 'App\Http\Controllers\Customer\AuthController@register');
@@ -281,19 +285,19 @@ Route::middleware(['admin'])->group(function () {
 
                                            /// Report \\\
 
-   Route::group(['prefix' => '/admin/report/'], function() {
-       Route::controller(App\Http\Controllers\Admin\ReportController::class)->group(function () {
-           Route::post('admin_product_sale','admin_product_sale');
-           Route::post('saller_product_sale','saller_product_sale');
-           Route::post('product_stock','product_stock');
-           Route::post('product_wishlist','product_wishlist');
-       });
-   });
+        Route::group(['prefix' => '/admin/report/'], function() {
+            Route::controller(App\Http\Controllers\Admin\ReportController::class)->group(function () {
+                Route::post('admin_product_sale','admin_product_sale');
+                Route::post('saller_product_sale','saller_product_sale');
+                Route::post('product_stock','product_stock');
+                Route::post('product_wishlist','product_wishlist');
+            });
+        });
 
 });
 
 
-Route::middleware(['seller'])->group(function () {  
+    Route::middleware(['seller'])->group(function () {  
      
       /////////////////////////////////// Seller Routes \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
@@ -336,12 +340,12 @@ Route::middleware(['seller'])->group(function () {
                                               /// Order \\\
 
         Route::group(['prefix' => '/seller/order/'], function() {
-        Route::controller(App\Http\Controllers\Seller\OrderController::class)->group(function () {
-            Route::get('show/{id}','index');
-            Route::post('delivery_status','delivery_status');
-            Route::post('payment_status','payment_status');
+            Route::controller(App\Http\Controllers\Seller\OrderController::class)->group(function () {
+                Route::get('show/{id}','index');
+                Route::post('delivery_status','delivery_status');
+                Route::post('payment_status','payment_status');
+            });
         });
-    });
 
 
 
@@ -372,6 +376,18 @@ Route::middleware(['seller'])->group(function () {
  
 
     });
+
+    Route::middleware(['seller'])->group(function () {  
+
+              /////////////////////////////////// Marketing Routes \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+      Route::get('/marketing/profile/view/{id}', 'App\Http\Controllers\Marketing\AuthController@profile_view');
+      Route::post('/marketing/profile', 'App\Http\Controllers\Marketing\AuthController@profile_update');
+      Route::get('/logout', 'App\Http\Controllers\AuthController@logout');
+      Route::get('/marketing/profile/check', 'App\Http\Controllers\Marketing\AuthController@usercheck'); 
+      Route::get('/marketing/dashboard','App\Http\Controllers\Marketing\DashboardController@index');
+
+    });    
 
 
 });
