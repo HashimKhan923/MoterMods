@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Validator;
 use App\Models\User;
+use App\Models\Shop;
 use Hash;
 
 class AuthController extends Controller
@@ -35,9 +36,29 @@ class AuthController extends Controller
         $new->user_type = 'seller';
         $new->is_active = 1;
         $new->save();
+
+        $newShop = new Shop();
+        $newShop->seller_id = $new->id;
+        $newShop->name = $request->shop_name;
+        $newShop->address = $request->shop_address;
+        if($request->file('banner'))
+        {
+                $file= $request->banner;
+                $filename= date('YmdHis').$file->getClientOriginalName();
+                $file->storeAs('public', $filename);
+                $newShop->banner = $filename;
+        }
+        if($request->file('logo'))
+        {
+                $file= $request->logo;
+                $filename= date('YmdHis').$file->getClientOriginalName();
+                $file->storeAs('public', $filename);
+                $newShop->logo = $filename;
+        }
+        $newShop->save();
         
         $token = $new->createToken('Laravel Password Grant Client')->accessToken;
-        $response = ['status'=>true,"message" => "Register Admin Successfully",'token' => $token];
+        $response = ['status'=>true,"message" => "Register Seller Successfully",'token' => $token];
         return response($response, 200);
     }
 
@@ -51,7 +72,7 @@ class AuthController extends Controller
             return response(['errors'=>$validator->errors()->all()], 422);
         }
         
-        $user = User::where('email', $request->email)->first();
+        $user = User::with('shop')->where('email', $request->email)->first();
         if ($user) {
 
         if($user->is_active == 1)

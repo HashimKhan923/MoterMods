@@ -41,14 +41,7 @@ class OneBannerController extends Controller
         {
             $data = new OneBanner();
 
-            if($request->file('image')){
-
-                $image_path = 'app/public'.$data->image;
-                if(Storage::exists($image_path))
-                {
-                    Storage::delete($image_path);
-                }
-    
+            if($request->file('image')){    
                 $file= $request->file('image');
                 $filename= date('YmdHis').$file->getClientOriginalName();
                 $file->storeAs('public', $filename);

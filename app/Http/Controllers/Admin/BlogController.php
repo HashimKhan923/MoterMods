@@ -19,6 +19,7 @@ class BlogController extends Controller
     {
         return $request;
         $new = new Blog();
+        $new->user_id = $request->user_id;
         $new->blogcat_id = $request->blogcat_id;
         $new->title = $request->title;
         $new->slug = $request->slug;
@@ -54,6 +55,13 @@ class BlogController extends Controller
         $update->short_description = $request->short_description;
         $update->description = $request->description;
         if($request->file('banner')){
+
+            $path = 'app/public'.$update->banner;
+            if (Storage::exists($path)) {
+                
+                Storage::delete($path);
+            }
+
             $file= $request->file('banner');
             $filename= date('YmdHis').$file->getClientOriginalName();
             $file->storeAs('public', $filename);
@@ -61,6 +69,13 @@ class BlogController extends Controller
         }
         $update->meta_title = $request->meta_title;
         if($request->file('meta_img')){
+
+            $path2 = 'app/public'.$update->meta_img;
+            if (Storage::exists($path2)) {
+                
+                Storage::delete($path2);
+            }
+
             $file= $request->file('meta_img');
             $filename= date('YmdHis').$file->getClientOriginalName();
             $file->storeAs('public', $filename);
@@ -76,7 +91,21 @@ class BlogController extends Controller
 
     public function delete($id)
     {
-        Blog::find($id)->delete();
+        $file=Blog::find($id);
+
+        $path = 'app/public'.$file->banner;
+        if (Storage::exists($path)) {
+            
+            Storage::delete($path);
+        }
+
+        $path2 = 'app/public'.$file->meta_img;
+        if (Storage::exists($path2)) {
+            
+            Storage::delete($path2);
+        }
+
+        $file->delete();
 
         $response = ['status'=>true,"message" => "Blog Deleted Successfully!"];
         return response($response, 200);

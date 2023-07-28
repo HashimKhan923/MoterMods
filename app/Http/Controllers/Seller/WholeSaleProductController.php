@@ -183,7 +183,7 @@ class WholeSaleProductController extends Controller
         $update->name = $request->name;
         $update->added_by = 'seller';
         $update->user_id = $request->user_id;
-        $new->product_type = $request->product_type;
+        $update->product_type = $request->product_type;
         $update->category_id = $request->category_id;
         $update->weight = $request->weight;
         $update->unit = $request->unit;
@@ -197,6 +197,23 @@ class WholeSaleProductController extends Controller
             $ProductGallery = array(); // Initialize the array
         
             foreach ($request->file('photos') as $photo) {
+
+                if($update->photos != null)
+                {
+                foreach($update->photos as $photosList)
+                {
+                 $DeletePhotos = 'app/public'.$photosList;
+                 if (Storage::exists($DeletePhotos))
+                 {
+                     Storage::delete($DeletePhotos);
+                 }
+           
+                }  
+                }
+
+
+
+
                 $file = $photo;
                 $filename = date('YmdHis') . $file->getClientOriginalName();
                 $file->storeAs('public', $filename);
@@ -208,6 +225,13 @@ class WholeSaleProductController extends Controller
 
         if($request->file('thumbnail_img'))
         {
+
+            $ProductThumbnail = 'app/public'.$update->thumbnail_img;
+            if (Storage::exists($ProductThumbnail))
+            {
+                Storage::delete($ProductThumbnail);
+            }
+
                 $file= $request->thumbnail_img;
                 $filename= date('YmdHis').$file->getClientOriginalName();
                 $file->storeAs('public', $filename);
@@ -224,6 +248,12 @@ class WholeSaleProductController extends Controller
         $update->meta_description = $request->meta_description;
         if($request->file('meta_img'))
         {
+            $ProductMetaImage = 'app/public'.$update->meta_img;
+            if (Storage::exists($ProductMetaImage))
+            {
+                Storage::delete($ProductMetaImage);
+            }
+
                 $file= $request->meta_img;
                 $filename= date('YmdHis').$file->getClientOriginalName();
                 $file->storeAs('public', $filename);

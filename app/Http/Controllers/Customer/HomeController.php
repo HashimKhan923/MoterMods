@@ -8,6 +8,10 @@ use App\Models\Product;
 use App\Models\Category;
 use App\Models\Brand;
 use App\Models\Banner;
+use App\Models\OneBanner;
+use App\Models\TwoBanner;
+use App\Models\ThreeBanner;
+use App\Models\Shop;
 
 class HomeController extends Controller
 {
@@ -17,8 +21,12 @@ class HomeController extends Controller
         $Categories = Category::where('is_active',1)->get();
         $Brands = Brand::where('is_active',1)->get();
         $Banners = Banner::where('status',1)->get();
+        $OneBanner = OneBanner::first();
+        $TwoBanners = TwoBanner::all();
+        $ThreeBanners = ThreeBanner::all();
+        $Shops = Shop::all();
 
-        return response()->json(['Products'=>$Products,'Categories'=>$Categories,'Brands'=>$Brands,'Banners'=>$Banners]);
+        return response()->json(['Products'=>$Products,'Categories'=>$Categories,'Brands'=>$Brands,'Banners'=>$Banners,'OneBanner'=>$OneBanner,'TwoBanners'=>$TwoBanners,'ThreeBanners'=>$ThreeBanners,'Shops'=>$Shops]);
     }
 
     

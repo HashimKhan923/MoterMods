@@ -18,6 +18,7 @@ class BlogCategoryController extends Controller
     public function create(Request $request)
     {
         $new = new BlogCategory();
+        $new->user_id = $request->user_id;
         $new->name = $request->name;
         $new->slug = $request->slug;
         $new->save();

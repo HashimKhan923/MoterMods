@@ -8,17 +8,18 @@ use App\Models\Blog;
 
 class BlogController extends Controller
 {
-    public function index()
+    public function index($id)
     {
-        $data = Blog::with('blog_category')->get();
+        $data = Blog::with('blog_category')->where('user_id',$id)->get();
 
         return response()->json(['data'=>$data]);
     }
 
     public function create(Request $request)
     {
-        return $request;
+
         $new = new Blog();
+        $new->user_id = $request->user_id;
         $new->blogcat_id = $request->blogcat_id;
         $new->title = $request->title;
         $new->slug = $request->slug;

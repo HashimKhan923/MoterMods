@@ -26,12 +26,6 @@ class ThreeBannerController extends Controller
 
             if($request->file('image'))
             {
-
-                $image_path = 'app/public'.$data->image;
-                if(Storage::exists($image_path))
-                {
-                    Storage::delete($image_path);
-                }
     
                 $file= $request->file('image');
                 $filename= date('YmdHis').$file->getClientOriginalName();

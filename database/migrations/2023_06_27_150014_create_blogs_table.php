@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('blogs', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('user_id')->unsigned()->nullable();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->bigInteger('blogcat_id')->unsigned()->nullable();
             $table->foreign('blogcat_id')->references('id')->on('blog_categories')->onDelete('cascade')->onUpdate('cascade');
             $table->string('title')->nullable();

@@ -359,6 +359,16 @@ Route::middleware(['admin'])->group(function () {
           });
       });
 
+                                            /// Shop \\\
+
+    Route::group(['prefix' => '/seller/shop/'], function() {
+        Route::controller(App\Http\Controllers\Seller\ShopController::class)->group(function () {
+            Route::get('show/{id}','index');
+            Route::post('update','update');
+
+        });
+    });
+
 
                                             /// Payout \\\
 
@@ -377,7 +387,7 @@ Route::middleware(['admin'])->group(function () {
 
     });
 
-    Route::middleware(['seller'])->group(function () {  
+    Route::middleware(['marketing'])->group(function () {  
 
               /////////////////////////////////// Marketing Routes \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
@@ -386,6 +396,41 @@ Route::middleware(['admin'])->group(function () {
       Route::get('/logout', 'App\Http\Controllers\AuthController@logout');
       Route::get('/marketing/profile/check', 'App\Http\Controllers\Marketing\AuthController@usercheck'); 
       Route::get('/marketing/dashboard','App\Http\Controllers\Marketing\DashboardController@index');
+
+
+                                                     /// Bolg Category \\\
+
+                    Route::group(['prefix' => '/marketing/blog_category/'], function() {
+                        Route::controller(App\Http\Controllers\Marketing\BlogCategoryController::class)->group(function () {
+                            Route::get('show','index');
+                            // Route::post('create','create');
+                            // Route::post('update','update');
+                            // Route::get('delete/{id}','delete');
+                        });
+                    });
+
+                                                                    /// Bolg  \\\
+
+                    Route::group(['prefix' => '/marketing/blog/'], function() {
+                        Route::controller(App\Http\Controllers\Marketing\BlogController::class)->group(function () {
+                            Route::get('show/{id}','index');
+                            Route::post('create','create');
+                            Route::post('update','update');
+                            Route::get('delete/{id}','delete');
+                        });
+                    });
+
+
+                                                             /// Coupon \\\
+
+                    Route::group(['prefix' => '/marketing/coupon/'], function() {
+                        Route::controller(App\Http\Controllers\Marketing\CouponController::class)->group(function () {
+                            Route::get('show/{id}','index');
+                            Route::post('create','create');
+                            Route::post('update','update');
+                            Route::get('delete/{id}','delete');
+                        });
+                    });
 
     });    
 
@@ -414,7 +459,7 @@ Route::middleware(['admin'])->group(function () {
 
                                                /// Product \\\
 
-      Route::group(['prefix' => 'product/'], function() {
+      Route::group(['prefix' => '/product'], function() {
         Route::controller(App\Http\Controllers\Customer\ProductController::class)->group(function () {
             Route::get('show','index');
             Route::get('detail/{id}','detail');
@@ -424,7 +469,7 @@ Route::middleware(['admin'])->group(function () {
 
                                           /// Wishlist \\\
 
-        Route::group(['prefix' => 'wishlist/'], function() {
+        Route::group(['prefix' => '/wishlist'], function() {
         Route::controller(App\Http\Controllers\Customer\WhishlistController::class)->group(function () {
             Route::get('show/{id}','index');
             Route::post('create','create');
@@ -434,7 +479,7 @@ Route::middleware(['admin'])->group(function () {
 
                                               /// Review \\\
 
-        Route::group(['prefix' => 'review/'], function() {
+        Route::group(['prefix' => '/review'], function() {
         Route::controller(App\Http\Controllers\Customer\ProductReviewController::class)->group(function () {
             Route::post('create','create');
         });
@@ -443,7 +488,7 @@ Route::middleware(['admin'])->group(function () {
 
                                         /// Subscribe \\\
 
-        Route::group(['prefix' => 'subscribe/'], function() {
+        Route::group(['prefix' => '/subscribe'], function() {
         Route::controller(App\Http\Controllers\Customer\SubscriberController::class)->group(function () {
             Route::post('create','create');     
         });
@@ -452,7 +497,7 @@ Route::middleware(['admin'])->group(function () {
 
                                         /// Order \\\
 
-        Route::group(['prefix' => 'order/'], function() {
+        Route::group(['prefix' => '/order'], function() {
         Route::controller(App\Http\Controllers\Customer\OrderController::class)->group(function () {
             Route::get('show/{id}','index');
             Route::post('create','create');
@@ -462,7 +507,7 @@ Route::middleware(['admin'])->group(function () {
 
                                             /// Refund \\\
 
-    Route::group(['prefix' => 'refund/'], function() {
+    Route::group(['prefix' => '/refund'], function() {
         Route::controller(App\Http\Controllers\Customer\RefundController::class)->group(function () {
             Route::get('show/{id}','index');
             Route::post('create','create');

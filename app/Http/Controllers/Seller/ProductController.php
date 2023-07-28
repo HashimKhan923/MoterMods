@@ -28,6 +28,7 @@ class ProductController extends Controller
         $new->name = $request->name;
         $new->added_by = 'seller';
         $new->user_id = $request->user_id;
+        $new->shop_id = $request->shop_id;
         $new->product_type = $request->product_type;
         $new->category_id = $request->category_id;
         $new->weight = $request->weight;
@@ -155,7 +156,7 @@ class ProductController extends Controller
     {
         $update = Product::where('id',$request->id)->first();
         $update->name = $request->name;
-        $update->added_by = 'seller';
+        $update->added_by = 'admin';
         $update->user_id = $request->user_id;
         $update->product_type = $request->product_type;
         $update->category_id = $request->category_id;
@@ -168,6 +169,25 @@ class ProductController extends Controller
         $update->condition = $request->condition;
 
         if ($request->file('photos')) {
+
+            if($update->photos != null)
+            {
+            foreach($update->photos as $photosList)
+            {
+             $DeletePhotos = 'app/public'.$photosList;
+             if (Storage::exists($DeletePhotos))
+             {
+                 Storage::delete($DeletePhotos);
+             }
+       
+            }  
+            }
+
+
+
+
+
+
             $ProductGallery = array(); // Initialize the array
         
             foreach ($request->file('photos') as $photo) {
@@ -182,6 +202,12 @@ class ProductController extends Controller
 
         if($request->file('thumbnail_img'))
         {
+            $ProductThumbnail = 'app/public'.$update->thumbnail_img;
+            if (Storage::exists($ProductThumbnail))
+            {
+                Storage::delete($ProductThumbnail);
+            }
+
                 $file= $request->thumbnail_img;
                 $filename= date('YmdHis').$file->getClientOriginalName();
                 $file->storeAs('public', $filename);
@@ -198,13 +224,19 @@ class ProductController extends Controller
         $update->meta_description = $request->meta_description;
         if($request->file('meta_img'))
         {
+
+            $ProductMetaImage = 'app/public'.$update->meta_img;
+            if (Storage::exists($ProductMetaImage))
+            {
+                Storage::delete($ProductMetaImage);
+            }
+
                 $file= $request->meta_img;
                 $filename= date('YmdHis').$file->getClientOriginalName();
                 $file->storeAs('public', $filename);
                 $update->meta_img = $filename;
         }
         $update->slug = $request->slug;
-        $update->sku = $request->sku;
         $update->save();
 
         if($request->discount != null)
@@ -259,24 +291,23 @@ class ProductController extends Controller
             $shipping->save();
         }
 
-        if($request->wholesale_price != null)
-        {
-            WholesaleProduct::where('product_id',$update->id)->delete();
+        // if($request->wholesale_price != null)
+        // {
+        //     WholesaleProduct::where('product_id',$update->id)->delete();
 
-            foreach($request->wholesale_price as $price)
-            {
-                $wholesale = new WholesaleProduct();
-                $wholesale->product_id = $update->id;
-                $wholesale->wholesale_price = $price;
-                $wholesale->wholesale_min_qty = $request->wholesale_min_qty;
-                $wholesale->wholesale_max_qty = $request->wholesale_max_qty;
-                $wholesale->save();               
-            }
-        }
+        //     foreach($request->wholesale_price as $price)
+        //     {
+        //         $wholesale = new WholesaleProduct();
+        //         $wholesale->product_id = $update->id;
+        //         $wholesale->wholesale_price = $price;
+        //         $wholesale->wholesale_min_qty = $request->wholesale_min_qty;
+        //         $wholesale->wholesale_max_qty = $request->wholesale_max_qty;
+        //         $wholesale->save();               
+        //     }
+        // }
 
         $response = ['status'=>true,"message" => "Product updated Successfully!"];
         return response($response, 200);
-
     }
 
     public function delete($id)

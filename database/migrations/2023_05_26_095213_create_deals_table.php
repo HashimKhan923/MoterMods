@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string('name')->nullable();
             $table->string('banner')->nullable();
             $table->text('page_link')->nullable();
-            $table->date('discount_start_date')->nullable();
-            $table->date('discount_end_date')->nullable();
+            $table->string('discount_start_date')->nullable();
+            $table->string('discount_end_date')->nullable();
             $table->boolean('status')->default(1);
             $table->boolean('featured')->default(0);
             $table->timestamps();

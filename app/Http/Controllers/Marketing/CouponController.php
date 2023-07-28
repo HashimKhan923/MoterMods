@@ -10,7 +10,7 @@ class CouponController extends Controller
 {
     public function index()
     {
-        $data = Coupon::all();
+        $data = Coupon::where('user_id',$id)->get();
 
         return response()->json(['data'=>$data]);
     }
@@ -18,6 +18,7 @@ class CouponController extends Controller
     public function create(Request $request)
     {
         $new = new Coupon();
+        $new->user_id = $request->user_id;
         $new->name = $request->name;
         $new->code = $request->code;
         $new->discount = $request->discount;
