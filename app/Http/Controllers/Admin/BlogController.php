@@ -17,9 +17,9 @@ class BlogController extends Controller
 
     public function create(Request $request)
     {
-        return $request;
+    
         $new = new Blog();
-        $new->user_id = $request->user_id;
+        // $new->user_id = $request->user_id;
         $new->blogcat_id = $request->blogcat_id;
         $new->title = $request->title;
         $new->slug = $request->slug;

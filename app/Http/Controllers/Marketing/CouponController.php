@@ -5,10 +5,11 @@ namespace App\Http\Controllers\Marketing;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Coupon;
+use Carbon\Carbon;
 
 class CouponController extends Controller
 {
-    public function index()
+    public function index($id)
     {
         $data = Coupon::where('user_id',$id)->get();
 
@@ -23,8 +24,8 @@ class CouponController extends Controller
         $new->code = $request->code;
         $new->discount = $request->discount;
         $new->discount_type = $request->discount_type;
-        $new->start_date = $request->start_date;
-        $new->end_date = $request->end_date;
+        $new->start_date = Carbon::parse($request->start_date);
+        $new->end_date = Carbon::parse($request->end_date);
         $new->save();
 
         $response = ['status'=>true,"message" => "Coupon Created Successfully!"];

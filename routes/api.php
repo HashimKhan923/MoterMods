@@ -411,7 +411,7 @@ Route::middleware(['admin'])->group(function () {
 
                                                                     /// Bolg  \\\
 
-                    Route::group(['prefix' => '/marketing/blog/'], function() {
+                    Route::group(['prefix' => '/marketing/blog'], function() {
                         Route::controller(App\Http\Controllers\Marketing\BlogController::class)->group(function () {
                             Route::get('show/{id}','index');
                             Route::post('create','create');
@@ -511,6 +511,16 @@ Route::middleware(['admin'])->group(function () {
         Route::controller(App\Http\Controllers\Customer\RefundController::class)->group(function () {
             Route::get('show/{id}','index');
             Route::post('create','create');
+            Route::get('delete/{id}','delete');
+        });
+    });
+
+                                                /// Filter \\\
+
+    Route::group(['prefix' => '/search'], function() {
+        Route::controller(App\Http\Controllers\Customer\FilterController::class)->group(function () {
+            Route::post('product','search');
+            Route::post('price','price');
             Route::get('delete/{id}','delete');
         });
     });

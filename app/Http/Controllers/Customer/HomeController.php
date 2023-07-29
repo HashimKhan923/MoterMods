@@ -12,6 +12,7 @@ use App\Models\OneBanner;
 use App\Models\TwoBanner;
 use App\Models\ThreeBanner;
 use App\Models\Shop;
+use App\Models\Blog;
 
 class HomeController extends Controller
 {
@@ -25,8 +26,10 @@ class HomeController extends Controller
         $TwoBanners = TwoBanner::all();
         $ThreeBanners = ThreeBanner::all();
         $Shops = Shop::all();
+        $LatestBlogs = Blog::latest()->limit(6)->get();
 
-        return response()->json(['Products'=>$Products,'Categories'=>$Categories,'Brands'=>$Brands,'Banners'=>$Banners,'OneBanner'=>$OneBanner,'TwoBanners'=>$TwoBanners,'ThreeBanners'=>$ThreeBanners,'Shops'=>$Shops]);
+        return response()->json(['Products'=>$Products,'Categories'=>$Categories,'Brands'=>$Brands,'Banners'=>$Banners,'OneBanner'=>$OneBanner,'TwoBanners'=>$TwoBanners,'ThreeBanners'=>$ThreeBanners,'Shops'=>$Shops
+        ,'LatestBlogs'=>$LatestBlogs]);
     }
 
     
