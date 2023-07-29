@@ -13,6 +13,8 @@ use App\Models\TwoBanner;
 use App\Models\ThreeBanner;
 use App\Models\Shop;
 use App\Models\Blog;
+use App\Models\Vehicle;
+use App\Models\Engine;
 
 class HomeController extends Controller
 {
@@ -28,8 +30,14 @@ class HomeController extends Controller
         $Shops = Shop::all();
         $LatestBlogs = Blog::latest()->limit(6)->get();
 
+        $brandsWithProductCount = Brand::withCount('products')->get();
+        $vehicleWithProductCount = Vehicle::withCount('products')->get();
+        $engineWithProductCount = Engine::withCount('products')->get();
+
+
+
         return response()->json(['Products'=>$Products,'Categories'=>$Categories,'Brands'=>$Brands,'Banners'=>$Banners,'OneBanner'=>$OneBanner,'TwoBanners'=>$TwoBanners,'ThreeBanners'=>$ThreeBanners,'Shops'=>$Shops
-        ,'LatestBlogs'=>$LatestBlogs]);
+        ,'LatestBlogs'=>$LatestBlogs,'brandsWithProductCount'=>$brandsWithProductCount,'vehicleWithProductCount'=>$vehicleWithProductCount,'engineWithProductCount'=>$engineWithProductCount]);
     }
 
     

@@ -18,7 +18,7 @@ class WholeSaleProductController extends Controller
 {
     public function index($id)
     {
-        $Products = Product::with('user','category','brand','stock','discount','tax','shipping','deal.deal_product','wholesale')->whereHas('wholesale',function($query)
+        $Products = Product::with('user','category','brand','stock','discount','tax','shipping','deal.deal_product','wholesale','vehicle','engine')->whereHas('wholesale',function($query)
         {
             $query->where('id','!=',null);
         })->where('user_id',$id)->get();
@@ -55,14 +55,15 @@ class WholeSaleProductController extends Controller
         $new->name = $request->name;
         $new->added_by = 'seller';
         $new->user_id = $request->user_id;
-        $new->product_type = $request->product_type;
         $new->category_id = $request->category_id;
+        $new->vehicle_id = $request->vehicle_id;
+        $new->engine_id = $request->engine_id;
+        $new->shop_id = $request->shop_id;
         $new->weight = $request->weight;
         $new->unit = $request->unit;
         $new->sku = $request->sku;
         $new->brand_id = $request->brand_id;
         $new->model = $request->model;
-        $new->engine_type = $request->engine_type;
         $new->condition = $request->condition;
 
         if ($request->photos) {
@@ -183,14 +184,15 @@ class WholeSaleProductController extends Controller
         $update->name = $request->name;
         $update->added_by = 'seller';
         $update->user_id = $request->user_id;
-        $update->product_type = $request->product_type;
         $update->category_id = $request->category_id;
+        $update->vehicle_id = $request->vehicle_id;
+        $update->engine_id = $request->engine_id;
+        $update->shop_id = $request->shop_id;
         $update->weight = $request->weight;
         $update->unit = $request->unit;
         $update->sku = $request->sku;
         $update->brand_id = $request->brand_id;
         $update->model = $request->model;
-        $update->engine_type = $request->engine_type;
         $update->condition = $request->condition;
 
         if ($request->file('photos')) {

@@ -89,6 +89,31 @@ Route::middleware(['admin'])->group(function () {
      });
 
 
+                                                        /// Vehicle \\\
+
+    Route::group(['prefix' => '/admin/vehicle/'], function() {
+        Route::controller(App\Http\Controllers\Admin\VehicleController::class)->group(function () {
+            Route::get('show','index');
+            Route::post('create','create');
+            Route::post('update','update');
+            Route::get('delete/{id}','delete');
+            Route::get('status/{id}','status');
+        });
+    }); 
+
+                                                            /// Engine \\\
+
+    Route::group(['prefix' => '/admin/engine/'], function() {
+        Route::controller(App\Http\Controllers\Admin\EngineController::class)->group(function () {
+            Route::get('show','index');
+            Route::post('create','create');
+            Route::post('update','update');
+            Route::get('delete/{id}','delete');
+            Route::get('status/{id}','status');
+        });
+    });  
+
+
                                                   /// Deal \\\
 
        Route::group(['prefix' => '/admin/deal/'], function() {
@@ -520,7 +545,6 @@ Route::middleware(['admin'])->group(function () {
     Route::group(['prefix' => '/search'], function() {
         Route::controller(App\Http\Controllers\Customer\FilterController::class)->group(function () {
             Route::post('product','search');
-            Route::post('price','price');
-            Route::get('delete/{id}','delete');
+            Route::post('multi_search','multi_search');
         });
     });

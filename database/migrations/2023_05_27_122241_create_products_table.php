@@ -19,7 +19,10 @@ return new class extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade'); 
             $table->bigInteger('shop_id')->unsigned()->nullable();
             $table->foreign('shop_id')->references('id')->on('shops')->onDelete('cascade')->onUpdate('cascade');
-            $table->enum('product_type', ['car','bike'])->nullable();
+            $table->bigInteger('vehicle_id')->unsigned()->nullable();
+            $table->foreign('vehicle_id')->references('id')->on('vehicles')->onDelete('cascade')->onUpdate('cascade');
+            $table->bigInteger('engine_id')->unsigned()->nullable();
+            $table->foreign('engine_id')->references('id')->on('engines')->onDelete('cascade')->onUpdate('cascade');
             $table->bigInteger('category_id')->unsigned()->nullable();
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade')->onUpdate('cascade');
             $table->bigInteger('deal_id')->unsigned()->nullable();
@@ -28,7 +31,6 @@ return new class extends Migration
             $table->decimal('unit')->nullable();
             $table->string('sku')->nullable();
             $table->string('model')->nullable();
-            $table->string('engine_type')->nullable();
             $table->string('condition')->nullable();
             $table->bigInteger('brand_id')->unsigned()->nullable();
             $table->foreign('brand_id')->references('id')->on('brands')->onDelete('cascade')->onUpdate('cascade');
