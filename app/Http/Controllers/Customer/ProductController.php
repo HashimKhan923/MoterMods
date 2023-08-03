@@ -14,7 +14,7 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $Products = Product::with('user','category','brand','stock','discount','tax','shipping','deal','wholesale','review')->where('published',1)->where('approved',1)->get();
+        $Products = Product::with('user','category','brand','stock','discount','tax','shipping','deal.deal_product','vehicle','engine')->where('published',1)->where('approved',1)->get();
         $Categories = Category::where('is_active',1)->get();
         $Barnds = Brand::where('is_active',1)->get();
 
@@ -25,7 +25,7 @@ class ProductController extends Controller
 
     public function detail($id)
     {
-        $Products = Product::with('user','category','brand','stock','discount','tax','shipping','deal','wholesale','review')->where('id',$id)->first();
+        $Products = Product::with('user','category','brand','stock','discount','tax','shipping','deal.deal_product','vehicle','engine')->where('id',$id)->first();
     }
 
 

@@ -96,6 +96,7 @@ class ProductController extends Controller
                 $new->meta_img = $filename;
         }
         $new->slug = $request->slug;
+        $new->published = $request->published;
         $new->save();
 
         if($request->discount != null)

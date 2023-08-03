@@ -545,6 +545,6 @@ Route::middleware(['admin'])->group(function () {
     Route::group(['prefix' => '/search'], function() {
         Route::controller(App\Http\Controllers\Customer\FilterController::class)->group(function () {
             Route::post('product','search');
-            Route::post('multi_search','multi_search');
+            Route::post('multi_search','multiSearch');
         });
     });

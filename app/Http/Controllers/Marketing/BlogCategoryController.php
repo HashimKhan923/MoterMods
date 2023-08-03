@@ -8,7 +8,7 @@ use App\Models\BlogCategory;
 
 class BlogCategoryController extends Controller
 {
-    public function index($id)
+    public function index()
     {
         $data = BlogCategory::all();
 

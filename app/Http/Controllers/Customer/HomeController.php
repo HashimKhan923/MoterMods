@@ -20,7 +20,7 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $Products = Product::where('published',1)->get();
+        $Products = Product::with('user','category','brand','stock','discount','tax','shipping','deal.deal_product','vehicle','engine')->where('published',1)->get();
         $Categories = Category::where('is_active',1)->get();
         $Brands = Brand::where('is_active',1)->get();
         $Banners = Banner::where('status',1)->get();
@@ -33,11 +33,12 @@ class HomeController extends Controller
         $brandsWithProductCount = Brand::withCount('products')->get();
         $vehicleWithProductCount = Vehicle::withCount('products')->get();
         $engineWithProductCount = Engine::withCount('products')->get();
+        $conditionWithProductCount = Product::select('condition', DB::raw('count(*) as product_count'))->groupBy('condition')->get();
 
 
 
         return response()->json(['Products'=>$Products,'Categories'=>$Categories,'Brands'=>$Brands,'Banners'=>$Banners,'OneBanner'=>$OneBanner,'TwoBanners'=>$TwoBanners,'ThreeBanners'=>$ThreeBanners,'Shops'=>$Shops
-        ,'LatestBlogs'=>$LatestBlogs,'brandsWithProductCount'=>$brandsWithProductCount,'vehicleWithProductCount'=>$vehicleWithProductCount,'engineWithProductCount'=>$engineWithProductCount]);
+        ,'LatestBlogs'=>$LatestBlogs,'brandsWithProductCount'=>$brandsWithProductCount,'vehicleWithProductCount'=>$vehicleWithProductCount,'engineWithProductCount'=>$engineWithProductCount,'conditionWithProductCount'=>$conditionWithProductCount]);
     }
 
     

@@ -16,13 +16,13 @@ class FilterController extends Controller
 
         if($request->category_id != null)
         {
-            $data = Product::where('name', 'LIKE', '%'.$request->searchValue.'%')
+            $data = Product::with('user','category','brand','stock','discount','tax','shipping','deal.deal_product','vehicle','engine')->where('name', 'LIKE', '%'.$request->searchValue.'%')
             ->where('category_id',$request->category_id)
             ->get();
         }
         else
         {
-            $data = Product::where('name', 'LIKE', '%'.$request->searchValue.'%')->get();
+            $data = Product::with('user','category','brand','stock','discount','tax','shipping','deal.deal_product','vehicle','engine')->where('name', 'LIKE', '%'.$request->searchValue.'%')->get();
         }
 
         return response()->json(['data'=>$data]);
@@ -34,7 +34,7 @@ class FilterController extends Controller
 
     public function multiSearch(Request $request)
     {
-        $query = Product::query();
+        $query = Product::with('user','category','brand','stock','discount','tax','shipping','deal.deal_product','vehicle','engine')->query();
     
         // Apply filters based on user input
         if ($request->has('vehicle_id')) {
