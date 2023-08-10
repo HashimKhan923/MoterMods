@@ -34,31 +34,35 @@ class FilterController extends Controller
 
     public function multiSearch(Request $request)
     {
-        $query = Product::with('user','category','brand','stock','discount','tax','shipping','deal.deal_product','vehicle','engine')->query();
+        $query = Product::query();
     
         // Apply filters based on user input
-        if ($request->has('vehicle_id')) {
+        if ($request->vehicle_id != null) {
             $query->where('vehicle_id', $request->vehicle_id);
         }
     
-        if ($request->has('min_price')) {
-            $query->where('price','>=',$request->min_price)->where('price','<=',$request->max_price);
+
+        if ($request->min_price != null && $request->max_price != null) {
+            $query->where('price', '>=', $request->min_price)->where('price', '<=', $request->max_price);
+        } elseif ($request->min_price != null) {
+            $query->where('price', '>=', $request->min_price);
+        } elseif ($request->man_price != null) {
+            $query->where('price', '<=', $request->max_price);
         }
     
-    
-        if ($request->has('brand_id')) {
+        if ($request->brand_id != null) {
             $query->where('brand_id', $request->brand_id);
         }
 
-        if ($request->has('engine_id')) {
+        if ($request->engine_id != null) {
             $query->where('engine_id', $request->engine_id);
         }
 
-        if ($request->has('condition')) {
+        if ($request->condition != null) {
             $query->where('condition', $request->condition);
         }
     
-        $data = $query->get();
+        $data = $querywith('user','category','brand','stock','discount','tax','shipping','deal.deal_product','vehicle','engine')->where('published',1)->get();
     
         return response()->json(['data'=>$data]);
     }

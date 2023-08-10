@@ -15,6 +15,7 @@ use App\Models\Shop;
 use App\Models\Blog;
 use App\Models\Vehicle;
 use App\Models\Engine;
+use DB;
 
 class HomeController extends Controller
 {
