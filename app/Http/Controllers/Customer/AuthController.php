@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use Validator;
 use App\Models\User;
 use Hash;
+use Socialite;
+
+
 
 class AuthController extends Controller
 {
@@ -73,6 +76,13 @@ class AuthController extends Controller
             return response($response, 422);
         }
     }
+
+
+
+
+
+
+
 
     public function profile_view($id)
     {

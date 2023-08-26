@@ -62,7 +62,7 @@ class FilterController extends Controller
             $query->where('condition', $request->condition);
         }
     
-        $data = $querywith('user','category','brand','stock','discount','tax','shipping','deal.deal_product','vehicle','engine')->where('published',1)->get();
+        $data = $query::with('user','category','brand','stock','discount','tax','shipping','deal.deal_product','vehicle','engine')->where('published',1)->get();
     
         return response()->json(['data'=>$data]);
     }
