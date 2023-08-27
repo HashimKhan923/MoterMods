@@ -472,15 +472,11 @@ Route::middleware(['admin'])->group(function () {
         Route::get('/customer/dashboard','App\Http\Controllers\Customer\DashboardController@index');
 
         Route::group(['middleware' => ['web']], function () {
-
-            Route::middleware('cors')->group(function () {
-                Route::get('login/google', 'App\Http\Controllers\Customer\SocialAuthController@redirectToGoogle');
-                Route::get('login/google/callback', 'App\Http\Controllers\Customer\SocialAuthController@handleGoogleCallback');
-        
-                Route::get('login/facebook', 'App\Http\Controllers\Customer\SocialAuthController@redirectToFacebook');
-                Route::get('login/facebook/callback', 'App\Http\Controllers\Customer\SocialAuthController@handleFacebookCallback');
-            });
-
+            Route::get('login/google', 'App\Http\Controllers\Customer\SocialAuthController@redirectToGoogle');
+            Route::get('login/google/callback', 'App\Http\Controllers\Customer\SocialAuthController@handleGoogleCallback');
+    
+            Route::get('login/facebook', 'App\Http\Controllers\Customer\SocialAuthController@redirectToFacebook');
+            Route::get('login/facebook/callback', 'App\Http\Controllers\Customer\SocialAuthController@handleFacebookCallback');
         });
 
 
