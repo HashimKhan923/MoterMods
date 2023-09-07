@@ -78,6 +78,33 @@ class AuthController extends Controller
     }
 
 
+    public function social_login(Request $request)
+    {
+        $check_user = User::where('email',$request->email)->first();
+
+        if($check_user)
+        {
+            $token = $check_user->createToken('Laravel Password Grant Client')->accessToken;
+            $response = ['status'=>true,"message" => "Login Successfully",'token' => $token,'user'=>$check_user];
+            return response($response, 200);
+        }
+        else
+        {
+            $new = new User();
+            $new->name = $request->name;
+            $new->email = $request->email;
+            $new->password = Hash::make('customer123');
+            $new->user_type = 'customer';
+            $new->is_active = 1;
+            $new->save();
+            
+            $token = $new->createToken('Laravel Password Grant Client')->accessToken;
+            $response = ['status'=>true,"message" => "Customer Register Successfully",'token' => $token];
+            return response($response, 200);
+        }
+    }
+
+
 
 
 
