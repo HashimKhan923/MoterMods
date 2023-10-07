@@ -13,6 +13,7 @@ use App\Models\TwoBanner;
 use App\Models\ThreeBanner;
 use App\Models\Shop;
 use App\Models\Blog;
+use App\Models\BlogCategory;
 use App\Models\Vehicle;
 use App\Models\Engine;
 use DB;
@@ -29,6 +30,7 @@ class HomeController extends Controller
         $TwoBanners = TwoBanner::all();
         $ThreeBanners = ThreeBanner::all();
         $Shops = Shop::all();
+        $BlogCategories = BlogCategory::all();
         $LatestBlogs = Blog::latest()->limit(6)->get();
 
         $brandsWithProductCount = Brand::withCount('products')->get();
@@ -39,7 +41,7 @@ class HomeController extends Controller
 
 
         return response()->json(['Products'=>$Products,'Categories'=>$Categories,'Brands'=>$Brands,'Banners'=>$Banners,'OneBanner'=>$OneBanner,'TwoBanners'=>$TwoBanners,'ThreeBanners'=>$ThreeBanners,'Shops'=>$Shops
-        ,'LatestBlogs'=>$LatestBlogs,'brandsWithProductCount'=>$brandsWithProductCount,'vehicleWithProductCount'=>$vehicleWithProductCount,'engineWithProductCount'=>$engineWithProductCount,'conditionWithProductCount'=>$conditionWithProductCount]);
+        ,'LatestBlogs'=>$LatestBlogs,'BlogCategories'=>$BlogCategories,'brandsWithProductCount'=>$brandsWithProductCount,'vehicleWithProductCount'=>$vehicleWithProductCount,'engineWithProductCount'=>$engineWithProductCount,'conditionWithProductCount'=>$conditionWithProductCount]);
     }
 
     

@@ -336,7 +336,7 @@ Route::middleware(['admin'])->group(function () {
 
                                        /// Product \\\
 
-      Route::group(['prefix' => '/seller/product/'], function() {
+      Route::group(['prefix' => '/seller/products/'], function() {
           Route::controller(App\Http\Controllers\Seller\ProductController::class)->group(function () {
               Route::get('show/{id}','index');
               Route::post('create','create');
